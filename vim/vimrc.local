@@ -1,0 +1,77 @@
+" nová verze mého vimrc
+set encoding=utf-8
+set fileencoding=utf-8
+set nocompatible
+filetype plugin indent on
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+set nocompatible
+set autowrite
+set directory=~/tmp,.,/tmp
+set incsearch
+
+" set langmap=ě2,š3,č4,ř5,ž6,ý7,á8,í9,é0,\":,-/,_?,ů:
+map <F2> :w<CR>
+imap <F2> <Esc>:w<CR>i
+imap <F3> <Esc>v
+imap <c-y> <Esc>ddi
+map <c-y> dd
+map <ů> :
+"imap <ů> :
+"tohle je poznámka - asi nejspíš
+"set encoding=utf-8
+set autoindent
+" tohle dělá odsazování
+set smartindent
+set expandtab
+set hidden
+set foldenable
+set wildmenu
+set noswapfile
+" wild menu začne nabízet menu místo možnosti postupně
+set number
+set foldmethod=marker
+" aby se nestratila historie a uležení soubru když se přepínám mezi okny
+" map <C-Tab> :bnext<CR>
+"imap <C-Tab> :bnext<CR>
+" nnoremap <S-C-Tab> :bprevious<CR>
+" {{{1  nedůležité
+map <F6> :tabn<CR>
+map <F5> :tabp<CR>
+imap <F6> <Esc>:tabn<CR>
+imap <F5> <Esc>:tabp<CR>
+" set et
+" }}}
+set ts=2
+set sw=2
+" ovlivňuje chování >%
+colorscheme murphy
+" Schémátka jsou uloženy v /usr/share/vim/vim70/colors možné stáhnout je na
+" http://www.vim.org/scripts/script_search_results.php?keywords=&script_type=color+scheme&order_by=rating&direction=descending&search=search
+" normálně se volí :colorscheme evening třeba.
+" vzorkovník http://www.cs.cmu.edu/~maverick/VimColorSchemeTest/ ale zdá se že
+" některé vůbec nefungují. 
+set pastetoggle=<F11>
+" když chci vložit pomocí paste zmáčknu F11
+  " http://www.vim.org/tips/tip.php?tip_id=33i
+abbreviate ttt this->
+abbreviate ... ."','".
+
+" tab dokončuje slovo
+function InsertTabWrapper() 
+      let col = col('.') - 1 
+      if !col || getline('.')[col - 1] !~ '\k' 
+          return "\<tab>" 
+      else 
+          return "\<c-p>" 
+      endif 
+endfunction 
+
+" then define the appropriate mapping: 
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+
+" zkopírováno z - http://www.vim.org/tips/tip.php?tip_id=102
+
+nnoremap <silent> <F8> :TagExplorer<CR>

@@ -1,0 +1,30 @@
+; BIND db file for debian-admin.cz
+
+$TTL 86400
+
+@       IN      SOA     ns.debian-admin.cz.      admin.debian-admin.cz. (
+                        2013080603	; serial number YYMMDDNN
+                        28800           ; Refresh
+                        7200            ; Retry
+                        864000          ; Expire
+                        86400           ; Min TTL
+			)
+
+                NS      ns.debian-admin.cz. 
+                NS      nss.debian-admin.cz. 
+
+                MX      10 mail.debian-admin.cz.
+
+
+$ORIGIN debian-admin.cz.
+
+; default
+
+	IN	A	77.93.202.142
+
+mail	IN	A	77.93.202.142
+ns	IN	A	77.93.202.142
+
+nss	IN	A	88.103.119.213
+
+iron	IN	CNAME	mail

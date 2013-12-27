@@ -1,0 +1,25 @@
+TARGETS = sysklogd modules_dep.sh saslauthd bootlogs killprocs sudo fancontrol postgresql bind9 openbsd-inetd dbus xinetd nscd stunnel4 lprng klogd openfire sendmail single ssh ejabberd postfix avahi-daemon cron fetchmail rsync portmap quotarpc rmnologin rc.local stop-bootlogd
+INTERACTIVE =
+postgresql: sysklogd
+bind9: sysklogd
+openbsd-inetd: sysklogd
+dbus: sysklogd
+xinetd: sysklogd
+nscd: sysklogd
+stunnel4: sysklogd
+lprng: sysklogd
+klogd: sysklogd
+openfire: sysklogd
+sendmail: sysklogd
+single: killprocs bootlogs
+ssh: sysklogd
+ejabberd: bind9
+postfix: sysklogd bind9 postgresql
+avahi-daemon: dbus sysklogd
+cron: sysklogd bind9 nscd
+fetchmail: sysklogd bind9
+rsync: sysklogd bind9
+quotarpc: sysklogd portmap
+rmnologin: sudo postgresql sysklogd modules_dep.sh ejabberd bind9 openbsd-inetd postfix portmap avahi-daemon dbus xinetd nscd saslauthd stunnel4 lprng quotarpc klogd openfire bootlogs sendmail cron fetchmail rsync ssh fancontrol
+rc.local: sysklogd postgresql modules_dep.sh ejabberd bind9 openbsd-inetd postfix portmap avahi-daemon dbus xinetd nscd saslauthd stunnel4 lprng quotarpc klogd openfire bootlogs sendmail cron sudo fetchmail rsync ssh fancontrol
+stop-bootlogd: postgresql sysklogd modules_dep.sh ejabberd bind9 openbsd-inetd postfix portmap avahi-daemon dbus xinetd nscd saslauthd stunnel4 lprng quotarpc klogd openfire bootlogs sendmail cron sudo fetchmail rsync ssh fancontrol

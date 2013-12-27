@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Configuration directory
+CONFIGDIR=/etc/lprng
+
+# Bail if the interface is the loopback
+[ "$IFACE" != "lo" ] || exit 0
+
+# Bail if not using resolvconf
+[ -x /sbin/resolvconf ] && exit 0
+
+# Bail if the daemon doesn't exist or lib dir is gone
+[ -x /usr/sbin/lpd ] || [ -d /usr/lib/lprng ] || exit 0
+
+# Work out the pid file
+LPD_PORT=$(grep "^[[:space:]]*lpd_port" $CONFIGDIR/lpd.conf | cut -d "=" -f 2)
+if [ -z $LPD_PORT ]
+then
+  LPD_PORT=515
+fi
+LOCKFILE=$(grep "^[[:space:]]*lockfile" $CONFIGDIR/lpd.conf | cut -d "=" -f 2)
+if [ -z $LOCKFILE ]
+then
+  LOCKFILE=/var/run/lprng/lpd
+fi
+PIDFILE=$LOCKFILE.$LPD_PORT
+
+# Bail if not pidfile 
+[ -f $PIDFILE ] || exit 0
+
+/usr/sbin/invoke-rc.d lprng restart

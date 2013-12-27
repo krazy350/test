@@ -1,0 +1,16 @@
+TARGETS = modules_dep.sh saslauthd openbsd-inetd xinetd stunnel4 lprng klogd openfire sendmail ejabberd postfix avahi-daemon cron urandom quotarpc postgresql bind9 nscd quota sysklogd sendsigs hwclock.sh umountnfs.sh portmap networking ifupdown umountfs umountroot halt reboot
+postgresql: postfix
+bind9: ejabberd postfix cron
+nscd: cron
+quota: quotarpc
+sysklogd: postgresql openbsd-inetd postfix avahi-daemon xinetd nscd stunnel4 quotarpc klogd openfire bind9 sendmail cron
+sendsigs: postgresql ejabberd openbsd-inetd postfix avahi-daemon xinetd nscd quota saslauthd stunnel4 sysklogd quotarpc openfire bind9
+hwclock.sh: postgresql ejabberd sysklogd
+umountnfs.sh: postgresql ejabberd openbsd-inetd postfix sendsigs avahi-daemon xinetd nscd quota saslauthd stunnel4 sysklogd quotarpc openfire bind9
+portmap: umountnfs.sh quotarpc
+networking: postgresql ejabberd postfix umountnfs.sh portmap lprng sysklogd openfire bind9
+ifupdown: postgresql ejabberd postfix umountnfs.sh portmap lprng networking sysklogd openfire bind9
+umountfs: postgresql ifupdown ejabberd openbsd-inetd postfix umountnfs.sh avahi-daemon xinetd nscd portmap quota saslauthd urandom stunnel4 networking hwclock.sh sysklogd quotarpc openfire bind9
+umountroot: umountfs
+halt: umountroot
+reboot: umountroot

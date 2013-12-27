@@ -1,0 +1,2 @@
+deb http://ftp.cz.debian.org/debian squeeze main contrib non-free
+deb http://ftp.cz.debian.org/debian squeeze-updates main contrib non-free
